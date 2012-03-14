@@ -1,3 +1,5 @@
+--to change line 28 make it work cross plateform
+
 function incrementalsave()
 	
 	local scenepath = os.getenv("SCENE_PATH")

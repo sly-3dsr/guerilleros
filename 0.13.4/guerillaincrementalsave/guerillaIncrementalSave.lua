@@ -1,35 +1,42 @@
---to change line 28 make it work cross plateform
-
 function incrementalsave()
+
+	local scenefile=string.format("%s/%s.gproject",os.getenv("SCENE_PATH"),os.getenv("SCENE"))
+	local stat=file.stat(scenefile)
 	
-	local scenepath = os.getenv("SCENE_PATH")
-	local scene = os.getenv("SCENE")
-	local fullpath = string.format("%s/%s.gproject",scenepath,scene)
-	
-	if not scene or (not scenepath) then
-		return
+	--Save scene
+	if not stat then
+		stat=savedocumentas()
+	else
+		stat=savedocument()
 	end
 
-	local scenefile=string.format("%s/%s.gproject",scenepath,scene)
+	if not stat then
+		return
+	end
+	
+	--Declare the scene variables
+	local scenepath = os.getenv("SCENE_PATH")
+	local scene = os.getenv("SCENE")
 	local incrementalpath=string.format("%s/incrementalSaves/%s",scenepath,scene)
-
-	--CheckIncrementalDir
+	local incrementedfile=string.format("%s/%s",incrementalpath,scene)
+	scenefile=string.format("%s/%s.gproject",scenepath,scene)
+	
+	--Check if the incremental directory exist
 	if not file.stat(incrementalpath) then
 		file.mkdirtree(incrementalpath)
 	end
 
-	if savedocument() then
-		local incrementedfile=string.format("%s/%s",incrementalpath,scene)
-		local count=0
-		while file.stat(string.format("%s.%04d.gproject",incrementedfile,count)) do
-			count=count+1
-		end
-		local destination=string.format("%s.%04d.gproject",incrementedfile,count)
-		os.execute(string.format("cp %s %s",fullpath,destination))
-	else
+	--Check incremented files to find a new file name
+	local count=0
+	while file.stat(string.format("%s.%04d.gproject",incrementedfile,count)) do
+		count=count+1
+	end
 
-		return
-
+	--Copying the file to the incremental directory with the found name
+	local destination=string.format("%s.%04d.gproject",incrementedfile,count)
+	if file.copy(scenefile,incrementalpath) then
+		local copiedfile=string.format("%s/%s.gproject",incrementalpath,scene)
+		file.rename(copiedfile,destination)
 	end
 
 end 

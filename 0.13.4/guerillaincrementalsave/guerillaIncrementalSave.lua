@@ -1,4 +1,14 @@
-function incrementalsave()
+--[[
+	Implementation of the Maya incremental save.
+--]]
+
+local	incrementalsavecommand = command.create ("Save Incremental", "icon_file_save.png", "Ctrl+S")
+
+function incrementalsavecommand:isenabled ()
+	return true
+end
+
+function incrementalsavecommand:action ()
 
 	local scenefile=string.format("%s/%s.gproject",os.getenv("SCENE_PATH"),os.getenv("SCENE"))
 	local stat=file.stat(scenefile)
@@ -11,7 +21,7 @@ function incrementalsave()
 	end
 
 	if not stat then
-        perror("ERROR:can't save the document")
+		pwarning("WARNING:The document was not saved")
 		return false
 	end
 	
@@ -30,7 +40,7 @@ function incrementalsave()
 	--Check incremented files to find a new file name
 	local count=0
 
-	while file.stat(string.format("%s.%04d.gproject",incrementedfile,count)) do
+	while file.stat(string.format("%s.%05d.gproject",incrementedfile,count)) do
 		count=count+1
 	end
 
@@ -42,16 +52,19 @@ function incrementalsave()
 		local copiedfile=string.format("%s/%s.gproject",incrementalpath,scene)
 
 		if file.rename(copiedfile,destination) then
-            return true        
-        else
-            perror(string.format("ERROR:could not rename '%s' to '%s'",copiedfile,destination))
-            return false
-        end
-    else
-        perror(string.format("ERROR:could not copy '%s' to '%s'",scenefile,incrementalpath))
-        return false
+			return true        
+		else
+			perror(string.format("ERROR:could not rename '%s' to '%s'",copiedfile,destination))
+			return false
+		end
+	else
+		perror(string.format("ERROR:could not copy '%s' to '%s'",scenefile,incrementalpath))
+		return false
 	end
 
-end 
+end
 
-incrementalsave()
+if MainMenu then
+	MainMenu:addcommand (incrementalsavecommand, "Guerilleros", "File")
+end
+--print("IncrementalSaveModule Loaded")

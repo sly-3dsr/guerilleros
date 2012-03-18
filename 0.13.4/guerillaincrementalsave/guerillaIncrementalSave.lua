@@ -11,7 +11,8 @@ function incrementalsave()
 	end
 
 	if not stat then
-		return
+        perror("ERROR:can't save the document")
+		return false
 	end
 	
 	--Declare the scene variables
@@ -28,15 +29,27 @@ function incrementalsave()
 
 	--Check incremented files to find a new file name
 	local count=0
+
 	while file.stat(string.format("%s.%04d.gproject",incrementedfile,count)) do
 		count=count+1
 	end
 
 	--Copying the file to the incremental directory with the found name
 	local destination=string.format("%s.%04d.gproject",incrementedfile,count)
+
 	if file.copy(scenefile,incrementalpath) then
+
 		local copiedfile=string.format("%s/%s.gproject",incrementalpath,scene)
-		file.rename(copiedfile,destination)
+
+		if file.rename(copiedfile,destination) then
+            return true        
+        else
+            perror(string.format("ERROR:could not rename '%s' to '%s'",copiedfile,destination))
+            return false
+        end
+    else
+        perror(string.format("ERROR:could not copy '%s' to '%s'",scenefile,incrementalpath))
+        return false
 	end
 
 end 

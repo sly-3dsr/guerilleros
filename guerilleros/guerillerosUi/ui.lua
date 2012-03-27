@@ -1,7 +1,7 @@
 ------Command selection lock
 local	gs_lockselectioncommand = command.create ("Selection Lock ", nil, "")
 function gs_lockselectioncommand:isenabled ()
-	return true
+	return tonumber(os.getenv("GUERILLA_POWER_USER"))==1
 end
 
 function gs_lockselectioncommand:action ()
@@ -11,7 +11,7 @@ end
 ------Command selection Unlock
 local	gs_unlockselectioncommand = command.create ("Selection Unlock ", nil, "")
 function gs_unlockselectioncommand:isenabled ()
-	return true
+	return tonumber(os.getenv("GUERILLA_POWER_USER"))==1
 end
 
 function gs_unlockselectioncommand:action ()
@@ -21,7 +21,7 @@ end
 ------Command Lock Materials
 local	gs_lockmaterialcommand = command.create ("Materials Lock", nil, "")
 function gs_lockmaterialcommand:isenabled ()
-	return true
+	return tonumber(os.getenv("GUERILLA_POWER_USER"))==1
 end
 
 function gs_lockmaterialcommand:action ()
@@ -31,7 +31,7 @@ end
 ------Command Unlock Materials
 local	gs_unlockmaterialcommand = command.create ("Materials Unlock ", nil, "")
 function gs_unlockmaterialcommand:isenabled ()
-	return true
+	return tonumber(os.getenv("GUERILLA_POWER_USER"))==1
 end
 
 function gs_unlockmaterialcommand:action ()

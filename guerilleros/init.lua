@@ -1,1 +1,3 @@
-require("guerillaincrementalsave")
+require("guerillerosIncrementalSave")
+require("guerillerosLock")
+require("guerillerosUi")

@@ -2,13 +2,7 @@
 	Implementation of the Maya incremental save.
 --]]
 
-local	incrementalsavecommand = command.create ("Save Incremental", "icon_file_save.png", "Ctrl+S")
-
-function incrementalsavecommand:isenabled ()
-	return true
-end
-
-function incrementalsavecommand:action ()
+function gs_incrementalsave()
 
 	local scenefile=string.format("%s/%s.gproject",os.getenv("SCENE_PATH"),os.getenv("SCENE"))
 	local stat=file.stat(scenefile)
@@ -63,8 +57,3 @@ function incrementalsavecommand:action ()
 	end
 
 end
-
-if MainMenu then
-	MainMenu:addcommand (incrementalsavecommand, "Guerilleros", "File")
-end
---print("IncrementalSaveModule Loaded")

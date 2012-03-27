@@ -1,0 +1,62 @@
+------Command selection lock
+local	gs_lockselectioncommand = command.create ("Selection Lock ", nil, "")
+function gs_lockselectioncommand:isenabled ()
+	return true
+end
+
+function gs_lockselectioncommand:action ()
+	gs_setselectionpermission(false)
+end
+
+------Command selection Unlock
+local	gs_unlockselectioncommand = command.create ("Selection Unlock ", nil, "")
+function gs_unlockselectioncommand:isenabled ()
+	return true
+end
+
+function gs_unlockselectioncommand:action ()
+	gs_setselectionpermission(true)
+end
+
+------Command Lock Materials
+local	gs_lockmaterialcommand = command.create ("Materials Lock", nil, "")
+function gs_lockmaterialcommand:isenabled ()
+	return true
+end
+
+function gs_lockmaterialcommand:action ()
+	gs_setmaterialpermission(false)
+end
+
+------Command Unlock Materials
+local	gs_unlockmaterialcommand = command.create ("Materials Unlock ", nil, "")
+function gs_unlockmaterialcommand:isenabled ()
+	return true
+end
+
+function gs_unlockmaterialcommand:action ()
+	gs_setmaterialpermission(true)
+end
+
+------Command incremental save
+local	gs_incrementalsavecommand = command.create ("Save Incremental", "icon_file_save.png", "")
+
+function gs_incrementalsavecommand:isenabled ()
+	return true
+end
+
+function gs_incrementalsavecommand:action ()
+	gs_incrementalsave()
+end
+
+------UI
+if MainMenu then
+	--Lock menu
+	MainMenu:addcommand (gs_lockselectioncommand, "Guerilleros", "Permission")
+	MainMenu:addcommand (gs_unlockselectioncommand, "Guerilleros", "Permission")
+	MainMenu:addseparator ("Guerilleros", "Permission")
+	MainMenu:addcommand (gs_lockmaterialcommand, "Guerilleros", "Permission")
+	MainMenu:addcommand (gs_unlockmaterialcommand, "Guerilleros", "Permission")
+	--File
+	MainMenu:addcommand (gs_incrementalsavecommand, "Guerilleros", "File")
+end

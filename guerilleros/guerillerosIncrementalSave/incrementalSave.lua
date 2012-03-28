@@ -33,13 +33,12 @@ function gs_incrementalsave()
 
 	--Check incremented files to find a new file name
 	local count=0
-
 	while file.stat(string.format("%s.%05d.gproject",incrementedfile,count)) do
 		count=count+1
 	end
 
 	--Copying the file to the incremental directory with the found name
-	local destination=string.format("%s.%04d.gproject",incrementedfile,count)
+	local destination=string.format("%s.%05d.gproject",incrementedfile,count)
 
 	if file.copy(scenefile,incrementalpath) then
 

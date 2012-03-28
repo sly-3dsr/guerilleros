@@ -1,5 +1,5 @@
 ------Command selection lock
-local	gs_lockselectioncommand = command.create ("Selection Lock ", nil, "")
+local	gs_lockselectioncommand = command.create ("Guerilleros|Permission|Selection Lock ", nil, "")
 function gs_lockselectioncommand:isenabled ()
 	return tonumber(os.getenv("GUERILLA_POWER_USER"))==1
 end
@@ -9,7 +9,7 @@ function gs_lockselectioncommand:action ()
 end
 
 ------Command selection Unlock
-local	gs_unlockselectioncommand = command.create ("Selection Unlock ", nil, "")
+local	gs_unlockselectioncommand = command.create ("Guerilleros|Permission|Selection Unlock ", nil, "")
 function gs_unlockselectioncommand:isenabled ()
 	return tonumber(os.getenv("GUERILLA_POWER_USER"))==1
 end
@@ -19,7 +19,7 @@ function gs_unlockselectioncommand:action ()
 end
 
 ------Command Lock Materials
-local	gs_lockmaterialcommand = command.create ("Materials Lock", nil, "")
+local	gs_lockmaterialcommand = command.create ("Guerilleros|Permission|Materials Lock", nil, "")
 function gs_lockmaterialcommand:isenabled ()
 	return tonumber(os.getenv("GUERILLA_POWER_USER"))==1
 end
@@ -29,7 +29,7 @@ function gs_lockmaterialcommand:action ()
 end
 
 ------Command Unlock Materials
-local	gs_unlockmaterialcommand = command.create ("Materials Unlock ", nil, "")
+local	gs_unlockmaterialcommand = command.create ("Guerilleros|Permission|Materials Unlock ", nil, "")
 function gs_unlockmaterialcommand:isenabled ()
 	return tonumber(os.getenv("GUERILLA_POWER_USER"))==1
 end
@@ -39,7 +39,7 @@ function gs_unlockmaterialcommand:action ()
 end
 
 ------Command incremental save
-local	gs_incrementalsavecommand = command.create ("Save Incremental", "icon_file_save.png", "")
+local	gs_incrementalsavecommand = command.create ("Guerilleros|File|Save Incremental", "icon_file_save.png", "")
 
 function gs_incrementalsavecommand:isenabled ()
 	return true

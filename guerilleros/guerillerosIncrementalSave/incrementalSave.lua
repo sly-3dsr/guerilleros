@@ -56,3 +56,10 @@ function gs_incrementalsave()
 	end
 
 end
+
+
+function gs_incrementalsaveflush()
+	
+	print("flush incremental save")
+
+end

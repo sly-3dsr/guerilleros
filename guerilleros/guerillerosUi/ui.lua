@@ -39,7 +39,7 @@ function gs_unlockmaterialcommand:action ()
 end
 
 ------Command incremental save
-local	gs_incrementalsavecommand = command.create ("Guerilleros|File|Save Incremental", "icon_file_save.png", "")
+local	gs_incrementalsavecommand = command.create ("Guerilleros|File|Incremental Save", "icon_file_save.png", "")
 
 function gs_incrementalsavecommand:isenabled ()
 	return true
@@ -47,6 +47,17 @@ end
 
 function gs_incrementalsavecommand:action ()
 	gs_incrementalsave()
+end
+
+------Command incremental save flush
+local	gs_incrementalsaveflushcommand = command.create ("Guerilleros|File|Incremental Flush", "button_bin.png", "")
+
+function gs_incrementalsaveflushcommand:isenabled ()
+	return true
+end
+
+function gs_incrementalsaveflushcommand:action ()
+	gs_incrementalsaveflush()
 end
 
 ------UI
@@ -59,4 +70,5 @@ if MainMenu then
 	MainMenu:addcommand (gs_unlockmaterialcommand, "Guerilleros", "Permission")
 	--File
 	MainMenu:addcommand (gs_incrementalsavecommand, "Guerilleros", "File")
+	MainMenu:addcommand (gs_incrementalsaveflushcommand, "Guerilleros", "File")
 end

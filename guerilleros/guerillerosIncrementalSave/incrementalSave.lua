@@ -59,7 +59,37 @@ end
 
 
 function gs_incrementalsaveflush()
-	
-	print("flush incremental save")
+	local incrementalpath=string.format("%s/incrementalSaves/%s",os.getenv("SCENE_PATH"),os.getenv("SCENE"))
 
+	--Check if the incremental directory exist	
+	if not file.stat(incrementalpath)then
+		return false
+	end
+
+	local latestfile=false
+	local mtime=0
+
+	for filename, stat in file.dir (incrementalpath, "%.gproject:reg") do
+		if not latestfile then
+			mtime=stat.st_mtime
+			latestfile=filename
+		elseif (stat.st_mtime > mtime) then
+			--print("deleting:"..string.format("%s/%s",incrementalpath,latestfile))
+			file.delete(string.format("%s/%s",incrementalpath,latestfile))
+			mtime=stat.st_mtime
+			latestfile=filename
+		elseif stat.st_mtime<mtime then
+			--print("deleting:"..string.format("%s/%s",incrementalpath,filename))
+			file.delete(string.format("%s/%s",incrementalpath,filename))
+		end
+
+	end
+
+	local torename=string.format("%s/%s",incrementalpath,latestfile)
+	local newname=string.gsub(torename,"(%d+)","00000")
+	file.rename(torename,newname
+)
+	return true
 end
+
+--gs_incrementalsaveflush()

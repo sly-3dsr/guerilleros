@@ -86,7 +86,7 @@ function gs_incrementalsaveflush()
 	end
 
 	local torename=string.format("%s/%s",incrementalpath,latestfile)
-	local newname=string.gsub(torename,"(%d+)","00000")
+	local newname=string.gsub(torename,".(%d+).gproject",".00000.gproject")
 	file.rename(torename,newname
 )
 	return true
